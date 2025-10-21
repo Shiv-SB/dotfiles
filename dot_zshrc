@@ -128,7 +128,7 @@ source $ZSH/oh-my-zsh.sh
 
 {{ if eq .chezmoi.os "darwin" }}
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-{{ end - }}
+{{ end }}
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
