@@ -105,11 +105,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='micro'
+ else
+   export EDITOR='micro'
+ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -125,7 +125,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+{{ if eq .chezmoi.os "darwin" }}
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+{{ end - }}
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 alias ..='cd ..'
 alias ll='ls -lah'
