@@ -144,6 +144,7 @@ alias chess='chess-tui'
 alias whereami='pwd'
 alias servers='awk '\''/^Host[[:space:]]+/ {print $2}'\'' ~/.ssh/config | sort'
 alias edit='micro'
+alias home='cd ~'
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bun:$PATH"
