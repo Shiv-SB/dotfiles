@@ -194,9 +194,6 @@ autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-
 load-nvmrc() {
   local nvmrc_path
   nvmrc_path="$(nvm_find_nvmrc)"
@@ -236,3 +233,6 @@ help() {
 
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
