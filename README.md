@@ -8,6 +8,7 @@ To update and push changes to files/templates:
 chezmoi edit ~/.zshrc
 
 # Once changes are made, push to main:
+chezmoi cd # nav to chezmoi dir
 (Make sure im logged into personal git and not work account!)
 git config user.email
 
