@@ -1,0 +1,285 @@
+
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Homebrew openjdk (macOS). Guarded so it is a no-op on Linux.
+if [[ -d /opt/homebrew/opt/openjdk@21/bin ]]; then
+  export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
+fi
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
+
+zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
+zstyle ':omz:plugins:alias-finder' longer yes # disabled by default
+zstyle ':omz:plugins:alias-finder' exact yes # disabled by default
+zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
+
+# Disable no newline character warning
+PROMPT_EOL_MARK=''
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+HIST_STAMPS="yyyy-mm-dd"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+ git
+ z
+ docker
+ history-substring-search
+ alias-finder
+ zsh-interactive-cd
+ zsh-autosuggestions
+ zsh-syntax-highlighting # must be the last one!
+ rust
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='micro'
+ else
+   export EDITOR='micro'
+ fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+
+
+
+
+
+alias ..='cd ..'
+alias ll='ls -lah'
+alias ports='lsof -i -P -n | grep LISTEN'
+alias cls='clear'
+alias ff='fastfetch'
+alias zshconfig='micro ~/.zshrc'
+alias reload='source ~/.zshrc'
+alias vsc='code -n .'
+alias chess='chess-tui'
+alias whereami='pwd'
+alias servers='awk '\''/^Host[[:space:]]+/ {print $2}'\'' ~/.ssh/config | sort'
+alias edit='micro'
+alias home='cd ~'
+{{ if eq .chezmoi.os "darwin" -}}
+alias copy='pbcopy'
+{{- else -}}
+alias copy='xclip -sel clip'
+{{- end }}
+alias spt='spotify_player'
+
+# Count lines of code in tracked files matching one or more extensions
+loc() {
+  if [ "$#" -eq 0 ]; then
+    echo "Usage: gitcount .ext1 [.ext2 ...]"
+    return 1
+  fi
+
+  # Build a grep pattern that matches any of the provided extensions
+  local pattern
+  pattern=$(printf "%s$\\|" "$@")
+  pattern="${pattern%\\|}"  # remove trailing \|
+
+  # Run the command
+  git ls-files | grep -E "$pattern" | xargs wc -l
+}
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Only run if not already in a tmux session
+#if command -v tmux >/dev/null && [ -z "$TMUX" ]; then
+#  ~/.tmux-startup.sh
+#  exit
+#fi
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=("$HOME/.docker/completions" $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+fpath=(~/.completions $fpath)
+
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+{{ if eq .chezmoi.os "darwin" }}code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+{{ end }}
+help() {
+    echo 'Useful aliases:'
+    echo '  $ ports             :: View ports in use'
+    echo '  $ zshconfig         :: Edit zsh config file'
+    echo '  $ reload            :: Reload and apply zsh config changes'
+    echo '  $ vsc               :: Open current dir in VSC'
+    echo '  $ chess             :: Play some chess!'
+    echo '  $ spt               :: Rust Spotify Client!'
+    echo '  $ whereami          :: Print the current dir'
+    echo '  $ servers           :: Show all hosts available for SSH'
+    echo '  $ micro             :: Alternate text editor to nano & pico'
+    echo '  $ oxker             :: Docker dashboard'
+    echo '  $ btop              :: Resource monitor'
+	echo '  $ chezmoi           :: Dotfile/conf manager'
+	echo '  $ tmux              :: Terminal window & pane manager'
+	echo '  $ witr              :: Show why process/port is runnning'
+	echo '  $ caffeinate -disu  :: Keep terminal sessions alive'
+
+	echo '\n'
+    echo ':::: tmux key binding: ctrl + b ::::'
+	echo '  binding -> c   :: Create window'
+	echo '  binding -> &   :: Close curr window'
+	echo '  binding -> n   :: Next window'
+	echo '  binding -> p   :: Previous window'
+	echo '  binding -> %   :: New split (vertical)'
+	echo '  binding -> "   :: New split (horizontal)'
+
+	echo '\n'
+	echo ':::: OMO agents / models ::::'
+	echo '  plan big work       :: prometheus -> metis -> momus'
+	echo '  implement spec      :: hephaestus | deep'
+	echo '  debug something     :: oracle'
+	echo '  find code           :: explore'
+	echo '  research lib/repo   :: librarian'
+	echo '  build UI / design   :: visual-engineering'
+	echo '  hard logic / arch   :: ultrabrain'
+	echo '  trivial one-file    :: quick (zen-free)'
+	echo '  write docs          :: writing (zen-free)'
+	echo '  review changes      :: code-reviewer (zen-free)'
+	echo '  heavy lifting       :: opencode-go (budget $60/mo)'
+	echo '  sub agents/fallback :: opencode-zen free models'
+
+}
+
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
+# Define a path for the 'flag' file in the temporary directory
+# This directory is cleared on reboot in macOS
+RUN_ONCE_FLAG="/tmp/zsh_startup_flag_${USER}"
+
+# Check if the file does NOT exist
+if [[ ! -f "$RUN_ONCE_FLAG" ]]; then
+    # Place the commands you want to run exactly once below:
+    ff
+    
+    # Example: Open a specific app or run a cleanup
+    # brew update && brew upgrade
+    
+    # Create the flag file so this block doesn't run again
+    touch "$RUN_ONCE_FLAG"
+fi
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+
+eval "$(starship init zsh)"

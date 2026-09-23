@@ -1,0 +1,4 @@
+# Source-repo-only. Listed in .chezmoiignore so chezmoi does not
+# write this file into $HOME.
+.DS_Store
+*.swp

@@ -1,0 +1,42 @@
+# Per-OS package lists. Consumed by run_once_before_install-packages.sh.tmpl
+# and install-packages.sh.tmpl.
+#
+# darwin  -> Homebrew (brew bundle)
+# linux   -> apt (Debian/Ubuntu). See install script for other distros.
+packages:
+  darwin:
+    brews:
+      - git
+      - micro
+      - tmux
+      - oxker
+      - btop
+      - ffmpeg
+      - spotify-player
+      - starship
+      - neovim
+      - chezmoi
+      - gopass
+      - gh
+      - fastfetch
+      - zsh-completions
+      - oven-sh/bun/bun
+    casks:
+      - docker-desktop
+      - font-meslo-lg-nerd-font
+  linux:
+    apt:
+      - git
+      - micro
+      - tmux
+      - btop
+      - ffmpeg
+      - starship
+      - neovim
+      - chezmoi
+      - gopass
+      - gh
+      - fastfetch
+      - zsh
+      - zsh-completions
+      - xclip

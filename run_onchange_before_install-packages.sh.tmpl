@@ -1,0 +1,36 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# macOS bootstrap: install Homebrew packages.
+# Re-runs whenever the darwin package list changes.
+# packages-hash: {{ .packages.darwin | toJson | sha256sum }}
+set -euo pipefail
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew missing. Install it from https://brew.sh, then run: chezmoi apply" >&2
+  exit 1
+fi
+
+brew bundle --file=/dev/stdin <<'BREWEOF'
+{{ range .packages.darwin.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+BREWEOF
+{{- else if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# Linux bootstrap: install packages via apt (Debian/Ubuntu).
+# Re-runs whenever the linux package list changes.
+# packages-hash: {{ .packages.linux | toJson | sha256sum }}
+set -euo pipefail
+
+PKGS="{{ range .packages.linux.apt }}{{ . }} {{ end }}"
+
+if command -v apt-get >/dev/null 2>&1; then
+  sudo apt-get update
+  sudo apt-get install -y $PKGS
+else
+  echo "Non-apt Linux detected. Install these manually: $PKGS" >&2
+fi
+{{- end -}}

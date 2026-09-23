@@ -1,0 +1,13 @@
+#!/bin/bash
+# Sync LazyVim plugins to the versions pinned in lazy-lock.json.
+# The hash below changes whenever the lock file changes, which is what
+# re-triggers this script.
+# lock-hash: {{ include "private_dot_config/nvim/lazy-lock.json" | sha256sum }}
+set -euo pipefail
+
+if ! command -v nvim >/dev/null 2>&1; then
+  echo "nvim not installed; skipping LazyVim plugin sync." >&2
+  exit 0
+fi
+
+nvim --headless "+Lazy! sync" +qa

@@ -1,0 +1,11 @@
+{{- $id := default .identity.default (index .identity .chezmoi.hostname) -}}
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = {{ $id.name }}
+	email = {{ $id.email }}
+[core]
+	editor = micro

@@ -1,0 +1,4 @@
+bot_depth = 10
+display_mode = "DEFAULT"
+engine_path = "/opt/homebrew/opt/stockfish/bin/stockfish"
+log_level = "OFF"

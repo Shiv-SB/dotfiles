@@ -1,0 +1,14 @@
+# Machine-specific identity, resolved by hostname in dot_gitconfig.tmpl.
+#
+# `default` is used on any host without an explicit entry. Add a
+# hostname-keyed override (e.g. a work laptop) to change name/email
+# without touching the template:
+#
+#   Shivarjuns-Mac-mini:
+#     name: Shiv
+#     email: 167079300+Shiv-hcr@users.noreply.github.com
+#
+identity:
+  default:
+    name: Shiv
+    email: 167079300+Shiv-hcr@users.noreply.github.com

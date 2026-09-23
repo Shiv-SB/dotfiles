@@ -1,0 +1,52 @@
+# ============================================================
+# .chezmoiignore
+# Paths chezmoi must NEVER manage or apply. Patterns are
+# relative to $HOME. Secrets are listed first so that even an
+# accidental `chezmoi add --recursive` cannot leak them.
+# ============================================================
+
+# --- Secrets: never track or apply ---
+.ssh/id_*
+.ssh/known_hosts*
+.ssh/known_hosts.old
+.config/gh/hosts.yml
+.config/opencode/cli.json
+.config/opencode/service.json
+.config/gopass/**
+.config/chezmoi/**
+.docker/config.json
+.kube/**
+.azure/**
+.aws/**
+.terraform.d/**
+.m2/**
+.nuget/**
+kv-access.*
+0x4F*.pub.key
+
+# --- History / generated state ---
+.zsh_history
+.bash_history
+.node_repl_history
+.viminfo
+.lesshst
+.zcompdump*
+.zsh_sessions/**
+.z
+.cache/**
+
+# --- App state that cannot be tracked (symlinks + sockets) ---
+.config/iterm2/**
+
+# --- Source-repo-only files: must not land in $HOME ---
+README.md
+.gitignore
+
+# --- Installed tooling, not tracked ---
+.oh-my-zsh/**
+.local/share/nvim/**
+.local/share/opencode/**
+.cargo/**
+.rustup/**
+.nvm/**
+.bun/**
