@@ -10,7 +10,7 @@ Supports macOS (Homebrew) and Linux (apt).
    - Linux: `sh -c "$(curl -fsLS get.chezmoi.io)"`
 2. Pull and apply:
    ```bash
-   chezmoi init --apply https://github.com/shiv-sb/dotfiles.git
+   chezmoi init --apply https://github.com/Shiv-SB/dotfiles.git
    ```
    This writes the config and runs the bootstrap scripts (packages,
    oh-my-zsh + plugins, LazyVim plugin sync).
