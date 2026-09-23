@@ -37,6 +37,33 @@ Pull changes made on another machine:
 chezmoi update             # git pull + apply
 ```
 
+### Pushing (account gotcha)
+
+The macOS keychain caches a `github.com` credential under `Shiv-hcr`, and
+`osxkeychain` takes precedence over `gh`'s active account. A plain
+`git push` therefore fails with **403** when the repo belongs to `Shiv-SB`.
+
+Push with `gh`'s active account explicitly:
+
+```bash
+gh auth switch --user Shiv-SB
+git -c credential.helper= -c credential.helper='!gh auth git-credential' \
+  push origin main
+gh auth switch --user Shiv-hcr   # restore your default account
+```
+
+To make this permanent, run `gh auth setup-git` once — it overrides
+`osxkeychain` for `github.com` with `gh`'s credential helper.
+
+### Reviewing changes
+
+`chezmoi diff` includes run scripts and renders them as if they were new
+files. For a diff of actual file targets only:
+
+```bash
+chezmoi diff --include=files
+```
+
 ## What is managed
 
 | Path | Notes |
